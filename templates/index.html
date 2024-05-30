@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Graph Selector</title>
+</head>
+<body>
+    <form method="post">
+        <label for="prompt">Enter your prompt:</label>
+        <input type="text" id="prompt" name="prompt" required>
+        
+        <fieldset>
+            <legend>Select a Graph to Display:</legend>
+            <input type="radio" id="chr1" name="graph" value="chr1">
+            <label for="chr1">Chr 1 Graph</label><br>
+            <input type="radio" id="chr2" name="graph" value="chr2">
+            <label for="chr2">Chr 2 Graph</label><br>
+            <input type="radio" id="chr3" name="graph" value="chr3">
+            <label for="chr3">Chr 3 Graph</label>
+            <input type="radio" id="chr4" name="graph" value="chr4">
+            <label for="chr4">Chr 4 Graph</label>
+            <input type="radio" id="chr5" name="graph" value="chr5">
+            <label for="chr5">Chr 5 Graph</label>
+            <input type="radio" id="chr6" name="graph" value="chr6">
+            <label for="chr6">Chr 6 Graph</label>
+            <input type="radio" id="chr7" name="graph" value="chr7">
+            <label for="chr7">Chr 7 Graph</label>
+            <input type="radio" id="chr8" name="graph" value="chr8">
+            <label for="chr8">Chr 8 Graph</label>
+            <input type="radio" id="chr9" name="graph" value="chr9">
+            <label for="chr9">Chr 9 Graph</label>
+            <input type="radio" id="chr10" name="graph" value="chr10">
+            <label for="chr10">Chr 10 Graph</label>
+            <input type="radio" id="chr11" name="graph" value="chr11">
+            <label for="chr11">Chr 11 Graph</label>
+            <input type="radio" id="chr12" name="graph" value="chr12">
+            <label for="chr12">Chr 12 Graph</label>
+            <input type="radio" id="chr13" name="graph" value="chr13">
+            <label for="chr13">Chr 13 Graph</label>
+            <input type="radio" id="chr14" name="graph" value="chr14">
+            <label for="chr14">Chr 14 Graph</label>
+            <input type="radio" id="chr15" name="graph" value="chr15">
+            <label for="chr15">Chr 15 Graph</label>
+            <input type="radio" id="chr16" name="graph" value="chr16">
+            <label for="chr16">Chr 16 Graph</label>
+            <input type="radio" id="chr17" name="graph" value="chr17">
+            <label for="chr17">Chr 17 Graph</label>
+            <input type="radio" id="chr18" name="graph" value="chr18">
+            <label for="chr18">Chr 18 Graph</label>
+            <input type="radio" id="chr19" name="graph" value="chr19">
+            <label for="chr19">Chr 19 Graph</label>
+            <input type="radio" id="chr20" name="graph" value="chr20">
+            <label for="chr20">Chr 20 Graph</label>
+            <input type="radio" id="chr21" name="graph" value="chr21">
+            <label for="chr21">Chr 21 Graph</label>
+            <input type="radio" id="chr22" name="graph" value="chr22">
+            <label for="chr22">Chr 22 Graph</label>
+            <input type="radio" id="chrMT" name="graph" value="chrMT">
+            <label for="chrMT">Chr MT Graph</label>
+            <input type="radio" id="chrX" name="graph" value="chrX">
+            <label for="chrX">Chr X Graph</label>
+            <input type="radio" id="chrY" name="graph" value="chrY">
+            <label for="chrY">Chr Y Graph</label>
+        </fieldset>
+        
+        <button type="submit">Submit</button>
+    </form>
+    
+    {% if response %}
+        <h2>Response:</h2>
+        <p>{{ response }}</p>
+        
+        {% if graph %}
+            <h2>Selected Graph:</h2>
+            <img src="{{ url_for('static', filename=graph) }}" alt="Selected Graph">
+        {% endif %}
+    {% endif %}
+</body>
+</html>
