@@ -2,78 +2,88 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Graph Selector</title>
+    <title>Demonstration of ChatGPT 4 Turbo and Python graphs Integrated into a webpage</title>
 </head>
 <body>
+    <h1>Demonstration of ChatGPT 4 Turbo and Python graphs Integrated into a webpage</h1><br>
+    <h2><b>1. Demonstration of ChatGPT 4 Turbo Integrated into a webpage</b></h2><br>
+    <!-- https://stackoverflow.com/questions/5392882/why-is-chrome-showing-a-please-fill-out-this-field-tooltip-on-empty-fields -->
     <form method="post">
-        <label for="prompt">Enter your prompt:</label>
-        <input type="text" id="prompt" name="prompt" required>
+        <label for="prompt">Type any question to ChatGPT 4 turbo and click the submit button:</label>
+        <!-- https://www.w3schools.com/tags/att_input_required.asp -->
+        <input type="text" id="prompt" name="prompt">
         
+        <button type="submit">Submit</button><br>
+    </form>
+    <br>
+    <br>
+    <h2><b>2. Demonstration of Python dynamic graphing Integrated into a webpage</b></h2><br>
+    <form method="post">
         <fieldset>
-            <legend>Select a Graph to Display:</legend>
+            <legend>Select a Graph to Dynamically generate and display Transcriptome features and click the submit button:</legend>
             <input type="radio" id="chr1" name="graph" value="chr1">
-            <label for="chr1">Chr 1 Graph</label><br>
+            <label for="chr1">Frequency of Genomic Features on Chromosome 1 Graph</label><br>
             <input type="radio" id="chr2" name="graph" value="chr2">
-            <label for="chr2">Chr 2 Graph</label><br>
+            <label for="chr2">Frequency of Genomic Features on Chromosome 2 Graph</label><br>
             <input type="radio" id="chr3" name="graph" value="chr3">
-            <label for="chr3">Chr 3 Graph</label>
+            <label for="chr3">Frequency of Genomic Features on Chromosome 3 Graph</label><br>
             <input type="radio" id="chr4" name="graph" value="chr4">
-            <label for="chr4">Chr 4 Graph</label>
+            <label for="chr4">Frequency of Genomic Features on Chromosome 4 Graph</label><br>
             <input type="radio" id="chr5" name="graph" value="chr5">
-            <label for="chr5">Chr 5 Graph</label>
+            <label for="chr5">Frequency of Genomic Features on Chromosome 5 Graph</label><br>
             <input type="radio" id="chr6" name="graph" value="chr6">
-            <label for="chr6">Chr 6 Graph</label>
+            <label for="chr6">Frequency of Genomic Features on Chromosome 6 Graph</label><br>
             <input type="radio" id="chr7" name="graph" value="chr7">
-            <label for="chr7">Chr 7 Graph</label>
+            <label for="chr7">Frequency of Genomic Features on Chromosome 7 Graph</label><br>
             <input type="radio" id="chr8" name="graph" value="chr8">
-            <label for="chr8">Chr 8 Graph</label>
+            <label for="chr8">Frequency of Genomic Features on Chromosome 8 Graph</label><br>
             <input type="radio" id="chr9" name="graph" value="chr9">
-            <label for="chr9">Chr 9 Graph</label>
+            <label for="chr9">Frequency of Genomic Features on Chromosome 9 Graph</label><br>
             <input type="radio" id="chr10" name="graph" value="chr10">
-            <label for="chr10">Chr 10 Graph</label>
+            <label for="chr10">Frequency of Genomic Features on Chromosome 10 Graph</label><br>
             <input type="radio" id="chr11" name="graph" value="chr11">
-            <label for="chr11">Chr 11 Graph</label>
+            <label for="chr11">Frequency of Genomic Features on Chromosome 11 Graph</label><br>
             <input type="radio" id="chr12" name="graph" value="chr12">
-            <label for="chr12">Chr 12 Graph</label>
+            <label for="chr12">Frequency of Genomic Features on Chromosome 12 Graph</label><br>
             <input type="radio" id="chr13" name="graph" value="chr13">
-            <label for="chr13">Chr 13 Graph</label>
+            <label for="chr13">Frequency of Genomic Features on Chromosome 13 Graph</label><br>
             <input type="radio" id="chr14" name="graph" value="chr14">
-            <label for="chr14">Chr 14 Graph</label>
+            <label for="chr14">Frequency of Genomic Features on Chromosome 14 Graph</label><br>
             <input type="radio" id="chr15" name="graph" value="chr15">
-            <label for="chr15">Chr 15 Graph</label>
+            <label for="chr15">Frequency of Genomic Features on Chromosome 15 Graph</label><br>
             <input type="radio" id="chr16" name="graph" value="chr16">
-            <label for="chr16">Chr 16 Graph</label>
+            <label for="chr16">Frequency of Genomic Features on Chromosome 16 Graph</label><br>
             <input type="radio" id="chr17" name="graph" value="chr17">
-            <label for="chr17">Chr 17 Graph</label>
+            <label for="chr17">Frequency of Genomic Features on Chromosome 17 Graph</label><br>
             <input type="radio" id="chr18" name="graph" value="chr18">
-            <label for="chr18">Chr 18 Graph</label>
+            <label for="chr18">Frequency of Genomic Features on Chromosome 18 Graph</label><br>
             <input type="radio" id="chr19" name="graph" value="chr19">
-            <label for="chr19">Chr 19 Graph</label>
+            <label for="chr19">Frequency of Genomic Features on Chromosome 19 Graph</label><br>
             <input type="radio" id="chr20" name="graph" value="chr20">
-            <label for="chr20">Chr 20 Graph</label>
+            <label for="chr20">Frequency of Genomic Features on Chromosome 20 Graph</label><br>
             <input type="radio" id="chr21" name="graph" value="chr21">
-            <label for="chr21">Chr 21 Graph</label>
+            <label for="chr21">Frequency of Genomic Features on Chromosome 21 Graph</label><br>
             <input type="radio" id="chr22" name="graph" value="chr22">
-            <label for="chr22">Chr 22 Graph</label>
+            <label for="chr22">Frequency of Genomic Features on Chromosome 22 Graph</label><br>
             <input type="radio" id="chrMT" name="graph" value="chrMT">
-            <label for="chrMT">Chr MT Graph</label>
+            <label for="chrMT">Frequency of Genomic Features on Mitochondrial Chromosome Graph.  The graph is empty when none of the other Chromosome graphs are, because the Mitochondrial Chromosome is so simple.</label><br>
             <input type="radio" id="chrX" name="graph" value="chrX">
-            <label for="chrX">Chr X Graph</label>
+            <label for="chrX">Frequency of Genomic Features on Chromosome X Graph</label><br>
             <input type="radio" id="chrY" name="graph" value="chrY">
-            <label for="chrY">Chr Y Graph</label>
+            <label for="chrY">Frequency of Genomic Features on Chromosome Y Graph</label>
         </fieldset>
         
         <button type="submit">Submit</button>
     </form>
     
     {% if response %}
-        <h2>Response:</h2>
+        <h2>Response to ChatGPT 4 Question:</h2>
         <p>{{ response }}</p>
-        
-        {% if graph %}
-            <h2>Selected Graph:</h2>
-            <img src="{{ url_for('static', filename=graph) }}" alt="Selected Graph">
-        {% endif %}
+    {% endif %}
+    
+    {% if graph %}
+        <h2>Selected Graph:</h2>
+        <img src="{{ url_for('static', filename=graph) }}" alt="Selected Graph">
     {% endif %}
 </body>
 </html>
