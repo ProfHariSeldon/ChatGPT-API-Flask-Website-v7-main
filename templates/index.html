@@ -2,25 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Demonstration of ChatGPT 4 Turbo and Python graphs Integrated into my webpage <a href="https://github.com/ProfHariSeldon/ChatGPT-API-Flask-Website-v7-main">ChatGPT-API-Flask-Website-v7</a></title>
+    <title>TL ChatGPT 4 and Dynamic Graphs</title>
+    <meta name="description" content="Demonstration of ChatGPT 4 and Dynamic Python graphs Integrated into my webpage">
+    <meta name="keywords" content="Thomas H. Lipscomb, Thomas Lipscomb, End to End website, Genomics, ChatGPT, Dynamic Graphs, 2024"> 
+    <title>Demonstration of ChatGPT 4 and Dynamic Python graphs Integrated into my webpage</title>
 </head>
 <body>
-    <h1>Demonstration of ChatGPT 4 Turbo and Python graphs Integrated into my webpage <a href="https://github.com/ProfHariSeldon/ChatGPT-API-Flask-Website-v7-main">https://github.com/ProfHariSeldon/ChatGPT-API-Flask-Website-v7-main</a></h1><br>
-    <h2><b>1. Demonstration of ChatGPT 4 Turbo Integrated into a webpage</b></h2><br>
+    <h1>Demonstration of ChatGPT 4 and Python graphs Integrated into my webpage</h1><br>
+    <h2><b>1A. Demonstration of ChatGPT 4 Integrated into a webpage</b></h2><br>
     <!-- https://stackoverflow.com/questions/5392882/why-is-chrome-showing-a-please-fill-out-this-field-tooltip-on-empty-fields -->
     <form method="post">
-        <label for="prompt">Type any question to ChatGPT 4 turbo and click the submit button:</label>
+        <label for="prompt">Type any question to ChatGPT 4 and click the submit button:</label>
+        <p>Example prompt: What is the Transcriptome??</p>
         <!-- https://www.w3schools.com/tags/att_input_required.asp -->
         <input type="text" id="prompt" name="prompt">
         
-        <button type="submit">Submit and wait 15 seconds</button><br>
+        <button type="submit">1B. Click this submit button and wait 15 seconds</button><br>
     </form>
     <br>
     <br>
-    <h2><b>2. Demonstration of Python dynamic graphing Integrated into a webpage</b></h2><br>
+    <h2><b>2. Demonstration of Python dynamic graphing Integrated into my webpage</b></h2><br>
     <form method="post">
         <fieldset>
-            <legend>Select a Graph to Dynamically generate and display Transcriptome features and click the submit button:</legend>
+            <legend>2A. Select which chromosome to dynamically generate a graph of its transcriptome features from a raw list of start and end positions:</legend>
             <input type="radio" id="chr1" name="graph" value="chr1">
             <label for="chr1">Frequency of Genomic Features on Chromosome 1 Graph</label><br>
             <input type="radio" id="chr2" name="graph" value="chr2">
@@ -66,14 +70,14 @@
             <input type="radio" id="chr22" name="graph" value="chr22">
             <label for="chr22">Frequency of Genomic Features on Chromosome 22 Graph</label><br>
             <input type="radio" id="chrMT" name="graph" value="chrMT">
-            <label for="chrMT">Frequency of Genomic Features on Mitochondrial Chromosome Graph.  The graph is empty when none of the other Chromosome graphs are, because the Mitochondrial Chromosome is so simple.</label><br>
             <input type="radio" id="chrX" name="graph" value="chrX">
-            <label for="chrX">Frequency of Genomic Features on Chromosome X Graph</label><p><br>
+            <label for="chrX">Frequency of Genomic Features on Chromosome X Graph</label><br>
             <input type="radio" id="chrY" name="graph" value="chrY">
-            <label for="chrY">Frequency of Genomic Features on Chromosome Y Graph</label>
+            <label for="chrY">Frequency of Genomic Features on Chromosome Y Graph</label><br>
+            <label for="chrMT">Frequency of Genomic Features on Mitochondrial Chromosome Graph.  The graph is empty, because the Mitochondrial Chromosome is so simple.</label>
         </fieldset>
         
-        <button type="submit">Submit and wait 15 seconds</button>
+        <button type="submit">2B. Click this submit button and wait 15 seconds</button>
     </form>
     
     {% if response %}
@@ -88,14 +92,22 @@
     
     <h2>How I wrote the website:</h2>
     
-    <p>To chat with ChatGPT 4 I copied python code from main.py and HTML code from chat3.5.html from <a href="https://github.com/redemptionwxy/ChatGPT-API-Flask-Website">https://github.com/redemptionwxy/ChatGPT-API-Flask-Website</a> then asked ChatGPT for python code to do the job of the script.js.</p>
+    <p>1. To chat with ChatGPT 4 I copied python code from main.py and HTML code from chat3.5.html from <a href="https://github.com/redemptionwxy/ChatGPT-API-Flask-Website">https://github.com/redemptionwxy/ChatGPT-API-Flask-Website</a> then asked ChatGPT for python code to do the job of the script.js and ChatGPT gave me most of the code without the modules I needed to import, which I added myself.</p>
     
-    <ul>In main.py, 8 lines of code is importing the modules ChatGPT forgot to add.  It took me a while to figure out how to add the ChatGPT 4 api_key and ChatGPT Transcriptome Classifier Custom GPT assistantId. Then there are 30 lines of code I copied from the ChatGPT documentation <a href="https://platform.openai.com/docs/assistants/overview?context=with-streaming">https://platform.openai.com/docs/assistants/overview?context=with-streaming</a> to ask questions in the terminal.  Then there are 18 lines of code copied from <a href="https://github.com/redemptionwxy/ChatGPT-API-Flask-Website">https://github.com/redemptionwxy/ChatGPT-API-Flask-Website</a> to create the ChatGPT 4 text box one can ask any question of then push the submit button.  Then there are 54 lines of code I got from ChatGPT that I improved.  Then there is one line of code to return render_template('index.html', prompt=prompt, response=response, graph=graph) which is to send the variables prompt, response, and graph to index.html, to make the webpage dynamic, that I got from ChatGPT but added graph=graph.  Then there is two lines of code to run the app and host it on port 5000.</ul>
+    <ul>1A. In main.py, 8 lines of code is importing the modules ChatGPT forgot to add.  It took me a while to figure out how to add the ChatGPT 4 api_key and ChatGPT Transcriptome Classifier Custom GPT assistantId. Then there are 30 lines of code I copied from the ChatGPT documentation <a href="https://platform.openai.com/docs/assistants/overview?context=with-streaming">https://platform.openai.com/docs/assistants/overview?context=with-streaming</a> to ask questions in the terminal.  Then there are 18 lines of code copied from <a href="https://github.com/redemptionwxy/ChatGPT-API-Flask-Website">https://github.com/redemptionwxy/ChatGPT-API-Flask-Website</a> to create the ChatGPT 4 text box one can ask any question of then push the submit button.  Then there are 54 lines of code I got from ChatGPT that I improved.  Then there is one line of code to return render_template('index.html', prompt=prompt, response=response, graph=graph) which is to send the variables prompt, response, and graph to index.html, to make the webpage dynamic, that I got from ChatGPT but added graph=graph.  Then there is two lines of code to run the app and host it on port 5000.</ul>
     
-    <ul>In index.html, 52 lines of code is my radio buttons I wrote myself after looking up how to make radio buttons in general and 18 lines of code with the if and endif I wrote myself after looking up how to do ifs in HTML.  6 lines of code in the index.html is the text box you can type your questions into and that was copied from <a href="https://github.com/redemptionwxy/ChatGPT-API-Flask-Website">https://github.com/redemptionwxy/ChatGPT-API-Flask-Website</a>.</ul>
+    <ul>1B. In index.html, 52 lines of code is my radio buttons I wrote myself after looking up how to make radio buttons in general and 18 lines of code with the if and endif I wrote myself after looking up how to do ifs in HTML.  6 lines of code in the index.html is the text box you can type your questions into and that was copied from <a href="https://github.com/redemptionwxy/ChatGPT-API-Flask-Website">https://github.com/redemptionwxy/ChatGPT-API-Flask-Website</a>.</ul>
     
-    <p>To dynamically generate the graphs, I had a foundation of code without importing modules from my asking for help from ChatGPT.  Since ChatGPT did not import the packages I had to do that.  Then I created ./static/chromosmoes.py to generate the graphs in 716 lines of code I modified from ChatGPT.  Then I improved that code to be much shorter (18 lines of code in main.py) and put it in main.py and no longer use ./static/chromosmoes.py.  Then I looked up how to add radio buttons to select which graph you want to dynamically generate.</p>
+    <p>2. To dynamically generate the graphs, IO asked ChatGPT for help and it gave me most of the code without the import modules.  Since ChatGPT did not import the modules I had to do that.</p>
     
-    <p>I also got the terminal (while building the website) to chat with my Transcriptome Classifier custom ChatGPT so that one could ask questions of ChatGPT about the files I use to create the graphs.  That is what content = "How many circRNAs are in hsa_hg38_circRNA.bed?" does.  The answer the terminal gives is 183718 circRNAs and is correct.  However, the how to do that in the terminal documentation <a href="https://platform.openai.com/docs/assistants/overview?context=with-streaming">https://platform.openai.com/docs/assistants/overview?context=with-streaming</a> does not explain how to do that in a website and thread = client.beta.threads.create() and message = client.beta.threads.messages.create() seem to not have the ability to be in a website only a terminal.  I asked for help from the ChatGPT website and they said they needed help from a collegue and they would get back to me.  That is all of the code before @app.route('/', methods=['GET', 'POST']) in main.py.</p>
+    <ul>2A.Then I created ./static/chromosmoes.py to generate the graphs in 716 lines of code I modified from ChatGPT.  Then I improved that code to be much shorter (18 lines of code in main.py) and put it in main.py and no longer use ./static/chromosmoes.py.  Then I looked up how to add radio buttons to select which graph you want to dynamically generate.</ul>
+    
+    <p>3. I was unable to get ChatGPT to answer questions about my graphs using my Transcriptome Classifier CustomGPT, because it had parameters to answer pregenerated questions in the terminal (while building the website) but no parameters to answer questions outside of the terminal in GET and POST in the text box that I used to ask ChatGPT 4 for help but could not replace that with my Transcriptome Classifier CustomGPT.</p>
+    
+    <ul>3A. That is what content = "How many circRNAs are in hsa_hg38_circRNA.bed?" does.  The answer the terminal gives is 183718 circRNAs and is correct.  However, the how to do that in the terminal documentation <a href="https://platform.openai.com/docs/assistants/overview?context=with-streaming">https://platform.openai.com/docs/assistants/overview?context=with-streaming</a> does not explain how to do that in a website and thread = client.beta.threads.create() and message = client.beta.threads.messages.create() seem to not have the ability to be in a website only a terminal.  I asked for help from the ChatGPT website and they said they needed help from a collegue and they would get back to me.  That is all of the code before @app.route('/', methods=['GET', 'POST']) in main.py.</ul>
+
+    <p>Code from: <a href="https://github.com/ProfHariSeldon/ChatGPT-API-Flask-Website-v7-main">ChatGPT-API-Flask-Website-v7</a></p>
+
+    <p>Created by: Thomas H. Lipscomb</p>
 </body>
 </html>
