@@ -20,6 +20,12 @@
         1B. Click the submit button and wait about 15 seconds. <input type="text" id="prompt" name="prompt">
         <button type="submit">Submit</button><br>
     </form>
+    
+    {% if response %}
+        <h2>Response to ChatGPT 4 Question:</h2>
+        <p>{{ response }}</p>
+    {% endif %}
+    
     <br>
     <br>
     <h2><b>2. Demonstration of Python dynamic graphing Integrated into a webpage</b></h2>
@@ -82,11 +88,6 @@
         
         2B. Click the submit button and wait about 15 seconds. <button type="submit">Submit</button><br>
     </form>
-    
-    {% if response %}
-        <h2>Response to ChatGPT 4 Question:</h2>
-        <p>{{ response }}</p>
-    {% endif %}
     
     {% if graph %}
         <h2>Selected Graph:</h2>
