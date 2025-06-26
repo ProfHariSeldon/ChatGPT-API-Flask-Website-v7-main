@@ -25,12 +25,14 @@ _ = load_dotenv(find_dotenv())
 
 app = Flask(__name__)
 
+openai.api_key = os.environ.get("OPENAI_API_KEY")
+
 # can be empty
-client = openai.OpenAI(
+## client = openai.OpenAI(
     # This is the default and can be omitted
-    api_key = os.environ.get("OPENAI_API_KEY"),
+    ## api_key = os.environ.get("OPENAI_API_KEY"),
     # assistant_id = os.environ.get('ASSISTANT_ID')/
-)
+## )
 
 # https://stackoverflow.com/questions/78018805/how-to-execute-custom-actions-with-chatgpt-assistants-api
 assistantId = os.environ.get('ASSISTANT_ID')
