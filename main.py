@@ -5,7 +5,6 @@ import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import time
 
 # Load environment variables
 _ = load_dotenv(find_dotenv())
@@ -15,8 +14,12 @@ ASSISTANT_ID = os.environ.get("ASSISTANT_ID")
 # Flask app setup
 app = Flask(__name__)
 
-# ✅ Create OpenAI client
-client = OpenAI(api_key=OPENAI_API_KEY)
+# ✅ Create OpenAI client with Responses API
+client = OpenAI(
+    base_url="http://localhost:8080/v1", 
+    api_key=OPENAI_API_KEY, 
+    default_headers={'x-model-provider': 'openai'}
+)
 
 # UI Route
 @app.route('/', methods=['GET', 'POST'])
@@ -32,39 +35,12 @@ def index():
 
         if prompt:
             try:
-                # Step 1: Create a thread
-                thread = client.beta.threads.create()
-
-                # Step 2: Add user message to the thread
-                client.beta.threads.messages.create(
-                    thread_id=thread.id,
-                    role="user",
-                    content=prompt
+                res = client.responses.create(
+                    model="gpt-4o-mini",
+                    input=prompt,
+                    extra_body={"assistant_id": ASSISTANT_ID} if ASSISTANT_ID else {}
                 )
-
-                # Step 3: Start the run
-                run = client.beta.threads.runs.create(
-                    thread_id=thread.id,
-                    assistant_id=ASSISTANT_ID
-                )
-
-                # Step 4: Poll until run completes
-                while True:
-                    run_status = client.beta.threads.runs.retrieve(
-                        thread_id=thread.id,
-                        run_id=run.id
-                    )
-                    if run_status.status in ["completed", "failed", "cancelled"]:
-                        break
-                    time.sleep(1)
-
-                # Step 5: Get the messages
-                messages = client.beta.threads.messages.list(thread_id=thread.id)
-                response_chunks = [
-                    msg.content[0].text.value for msg in messages.data if msg.role == "assistant"
-                ]
-                response = "\n".join(response_chunks)
-
+                response = res.output
             except Exception as e:
                 response = f"An error occurred: {str(e)}"
 
