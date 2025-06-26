@@ -10,7 +10,8 @@ import openai
 import os
 # Import specific classes or functions directly from their modules to avoid prefixing them with the module name.
 # Import the OpenAI library
-import openai
+## import openai
+from openai import OpenAI
 # from openai import OpenAI
 # Import the load_dotenv and find_dotenv functions from the dotenv package.
 # These are used for loading environment variables from a .env file.
@@ -25,8 +26,7 @@ _ = load_dotenv(find_dotenv())
 
 app = Flask(__name__)
 
-openai.api_key = os.environ.get("OPENAI_API_KEY")
-client = openai  # legacy SDK doesn't require client objects
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 # can be empty
 ## client = openai.OpenAI(
