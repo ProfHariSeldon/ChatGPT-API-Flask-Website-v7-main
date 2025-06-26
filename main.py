@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-from openai import OpenAI, AssistantEventHandler
+from openai.types.beta import AssistantEventHandler  ✅ (valid in ≥1.10.0)
 from openai.http import HttpxBinaryClient  # ✅ Available in >=1.7.0
 from dotenv import load_dotenv, find_dotenv
 import os
