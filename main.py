@@ -41,6 +41,7 @@ class EventHandler(AssistantEventHandler):
                     if output.type == "logs":
                         print(f"\n{output.logs}", flush=True)
 
+'''
 # Run assistant thread at startup
 def start_assistant_thread():
     thread = client.beta.threads.create()
@@ -58,7 +59,7 @@ def start_assistant_thread():
     ):
         pass
 
-start_assistant_thread()
+start_assistant_thread() '''
 
 # UI Route
 @app.route('/', methods=['GET', 'POST'])
@@ -74,13 +75,16 @@ def index():
 
         if prompt:
             try:
-                completion = client.chat.completions.create(
-                    model='gpt-4-turbo',
-                    messages=[{"role": "user", "content": prompt}]
-                )
-                response = completion.choices[0].message.content
-            except Exception as e:
-                response = f"An error occurred: {str(e)}"
+                with client.chat.completions.with_raw_response.create(
+                    model="gpt-4-turbo",
+                    messages=[{"role": "user", "content": "Your message here"}],
+                    stream=True
+                ) as stream:
+                    for chunk in stream.iter_text():
+                        print(chunk, end="", flush=True)
+                # response = completion.choices[0].message.content
+            # except Exception as e:
+                # response = f"An error occurred: {str(e)}"
 
         if selected_graph:
             try:
