@@ -14,7 +14,7 @@ ASSISTANT_ID = os.environ.get("ASSISTANT_ID")
 # Flask app setup
 app = Flask(__name__)
 
-# ✅ Create OpenAI client
+# Create OpenAI client
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 # UI Route
@@ -31,17 +31,14 @@ def index():
 
         if prompt:
             try:
-                with client.chat.completions.with_raw_response.create(
-                    model="gpt-4-turbo",
-                    messages=[
-                        {"role": "system", "content": f"You are an assistant assigned to user with premium access. Assistant ID: {ASSISTANT_ID}."},
-                        {"role": "user", "content": prompt}
-                    ],
-                    stream=True
-                ) as stream:
-                    response = ""
-                    for chunk in stream.iter_text():
-                        response += chunk
+                stream = client.beta.threads.runs.stream(
+                    assistant_id=ASSISTANT_ID,
+                    thread={"messages": [{"role": "user", "content": prompt}]}
+                )
+                response = ""
+                for event in stream:
+                    if event.event == "thread.message.delta" and event.data.delta.content:
+                        response += event.data.delta.content
             except Exception as e:
                 response = f"An error occurred: {str(e)}"
 
