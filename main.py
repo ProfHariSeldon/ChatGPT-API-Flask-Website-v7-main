@@ -1,8 +1,7 @@
 from flask import Flask, request, render_template
 from dotenv import load_dotenv, find_dotenv
 from openai import OpenAI
-from openai.http import HttpxBinaryClient  # Available in >=1.7.0
-from openai.types.beta.threads import AssistantEventHandler  # FIXED IMPORT
+from openai.types.beta.threads import AssistantEventHandler  # For streaming
 from typing_extensions import override
 
 import os
@@ -18,11 +17,8 @@ ASSISTANT_ID = os.environ.get("ASSISTANT_ID")
 # Flask app setup
 app = Flask(__name__)
 
-# OpenAI client with proxy-safe transport
-client = OpenAI(
-    api_key=OPENAI_API_KEY,
-    http_client=HttpxBinaryClient()
-)
+# ✅ Create OpenAI client (without HttpxBinaryClient)
+client = OpenAI(api_key=OPENAI_API_KEY)
 
 # Event handler for streaming assistant response
 class EventHandler(AssistantEventHandler):
@@ -47,7 +43,7 @@ class EventHandler(AssistantEventHandler):
                     if output.type == "logs":
                         print(f"\n{output.logs}", flush=True)
 
-# Thread + message + stream run
+# Run assistant thread at startup
 def start_assistant_thread():
     thread = client.beta.threads.create()
     client.beta.threads.messages.create(
@@ -64,7 +60,6 @@ def start_assistant_thread():
     ):
         pass
 
-# Run the assistant interaction on app start
 start_assistant_thread()
 
 # UI Route
@@ -138,6 +133,5 @@ def index():
 
     return render_template('index.html', prompt=prompt, response=response, graph=graph)
 
-# Start the Flask app
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
