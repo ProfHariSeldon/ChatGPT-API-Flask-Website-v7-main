@@ -5,7 +5,6 @@ import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import time
 
 # Load environment variables
 _ = load_dotenv(find_dotenv())
@@ -32,29 +31,13 @@ def index():
 
         if prompt:
             try:
-                # Step 1: Create a thread using the modern Responses API
-                thread = client.threads.create()
-
-                # Step 2: Add user message to the thread
-                client.threads.messages.create(
-                    thread_id=thread.id,
-                    role="user",
-                    content=prompt
+                # Use the modern Responses API directly
+                result = client.responses.create(
+                    model="gpt-4o",
+                    input=prompt,
+                    extra_body={"assistant_id": ASSISTANT_ID}
                 )
-
-                # Step 3: Start the run with streaming
-                stream = client.threads.runs.stream(
-                    thread_id=thread.id,
-                    assistant_id=ASSISTANT_ID,
-                    stream=True
-                )
-                
-                response = ""
-                for event in stream.iter_events():
-                    if event.data and hasattr(event.data, 'content'):
-                        for content_block in event.data.content:
-                            if hasattr(content_block, 'text') and content_block.text:
-                                response += content_block.text.value
+                response = result.response.text
 
             except Exception as e:
                 response = f"An error occurred: {str(e)}"
