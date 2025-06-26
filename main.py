@@ -33,7 +33,6 @@ def index():
             try:
                 # Use the new Assistants v2 Responses API
                 result = client.responses.create(
-                    assistant_id=ASSISTANT_ID,
                     model="gpt-4o",
                     input=prompt,
                     stream=False
