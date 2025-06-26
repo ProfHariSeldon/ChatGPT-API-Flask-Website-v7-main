@@ -26,6 +26,7 @@ _ = load_dotenv(find_dotenv())
 app = Flask(__name__)
 
 openai.api_key = os.environ.get("OPENAI_API_KEY")
+client = openai  # legacy SDK doesn't require client objects
 
 # can be empty
 ## client = openai.OpenAI(
