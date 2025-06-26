@@ -33,24 +33,24 @@ def index():
         if prompt:
             try:
                 # Step 1: Create a thread
-                thread = client.beta.threads.create()
+                thread = client.threads.create()
 
                 # Step 2: Add user message to the thread
-                client.beta.threads.messages.create(
+                client.threads.messages.create(
                     thread_id=thread.id,
                     role="user",
                     content=prompt
                 )
 
                 # Step 3: Start the run
-                run = client.beta.threads.runs.create(
+                run = client.threads.runs.create(
                     thread_id=thread.id,
                     assistant_id=ASSISTANT_ID
                 )
 
                 # Step 4: Poll until run completes
                 while True:
-                    run_status = client.beta.threads.runs.retrieve(
+                    run_status = client.threads.runs.retrieve(
                         thread_id=thread.id,
                         run_id=run.id
                     )
@@ -59,7 +59,7 @@ def index():
                     time.sleep(1)
 
                 # Step 5: Get the messages
-                messages = client.beta.threads.messages.list(thread_id=thread.id)
+                messages = client.threads.messages.list(thread_id=thread.id)
                 response_chunks = [
                     msg.content[0].text.value for msg in messages.data if msg.role == "assistant"
                 ]
