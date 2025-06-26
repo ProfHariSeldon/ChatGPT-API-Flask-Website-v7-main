@@ -32,7 +32,7 @@ def index():
 
         if prompt:
             try:
-                # Step 1: Create a thread
+                # Step 1: Create a thread using the modern Responses API
                 thread = client.threads.create()
 
                 # Step 2: Add user message to the thread
@@ -42,28 +42,19 @@ def index():
                     content=prompt
                 )
 
-                # Step 3: Start the run
-                run = client.threads.runs.create(
+                # Step 3: Start the run with streaming
+                stream = client.threads.runs.stream(
                     thread_id=thread.id,
-                    assistant_id=ASSISTANT_ID
+                    assistant_id=ASSISTANT_ID,
+                    stream=True
                 )
 
-                # Step 4: Poll until run completes
-                while True:
-                    run_status = client.threads.runs.retrieve(
-                        thread_id=thread.id,
-                        run_id=run.id
-                    )
-                    if run_status.status in ["completed", "failed", "cancelled"]:
-                        break
-                    time.sleep(1)
-
-                # Step 5: Get the messages
-                messages = client.threads.messages.list(thread_id=thread.id)
-                response_chunks = [
-                    msg.content[0].text.value for msg in messages.data if msg.role == "assistant"
-                ]
-                response = "\n".join(response_chunks)
+                response = ""
+                for event in stream.iter_events():
+                    if event.data and hasattr(event.data, 'content'):
+                        for content_block in event.data.content:
+                            if hasattr(content_block, 'text') and content_block.text:
+                                response += content_block.text.value
 
             except Exception as e:
                 response = f"An error occurred: {str(e)}"
