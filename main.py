@@ -14,7 +14,7 @@ ASSISTANT_ID = os.environ.get("ASSISTANT_ID")
 # Flask app setup
 app = Flask(__name__)
 
-# Create OpenAI client
+# ✅ Create OpenAI client
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 # UI Route
@@ -31,9 +31,20 @@ def index():
 
         if prompt:
             try:
+                # Step 1: Create a thread
+                thread = client.beta.threads.create()
+
+                # Step 2: Add user message to the thread
+                client.beta.threads.messages.create(
+                    thread_id=thread.id,
+                    role="user",
+                    content=prompt
+                )
+
+                # Step 3: Stream the assistant's response
                 stream = client.beta.threads.runs.stream(
-                    assistant_id=ASSISTANT_ID,
-                    thread={"messages": [{"role": "user", "content": prompt}]}
+                    thread_id=thread.id,
+                    assistant_id=ASSISTANT_ID
                 )
                 response = ""
                 for event in stream:
