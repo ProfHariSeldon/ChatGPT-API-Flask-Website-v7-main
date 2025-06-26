@@ -12,7 +12,7 @@ import os
 # Import the OpenAI library
 ## import openai
 from openai import OpenAI
-from openai._http_client import SyncHttpxClientWrapper
+from openai._utils._httpx_client import SyncHttpxClient
 # from openai import OpenAI
 # Import the load_dotenv and find_dotenv functions from the dotenv package.
 # These are used for loading environment variables from a .env file.
@@ -29,7 +29,7 @@ app = Flask(__name__)
 
 client = OpenAI(
     api_key=os.environ.get("OPENAI_API_KEY"),
-    http_client=SyncHttpxClientWrapper()  # avoids proxy injection issue
+        http_client=SyncHttpxClient()  # avoids proxy injection issue
 )
 
 # can be empty
