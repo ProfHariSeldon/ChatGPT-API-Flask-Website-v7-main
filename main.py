@@ -1,22 +1,28 @@
 from flask import Flask, request, render_template
-from openai import OpenAI
-from openai.assistants import AssistantEventHandler
-from openai.http import HttpxBinaryClient
 from dotenv import load_dotenv, find_dotenv
+from openai import OpenAI
+from openai.http import HttpxBinaryClient  # Available in >=1.7.0
+from openai.types.beta.threads import AssistantEventHandler  # ✅ FIXED IMPORT
+from typing_extensions import override
+
 import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from typing_extensions import override
 
 # Load environment variables
 _ = load_dotenv(find_dotenv())
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 ASSISTANT_ID = os.environ.get("ASSISTANT_ID")
 
-# Initialize Flask app and OpenAI client
+# Flask app setup
 app = Flask(__name__)
-client = OpenAI(api_key=OPENAI_API_KEY, http_client=HttpxBinaryClient())
+
+# OpenAI client with proxy-safe transport
+client = OpenAI(
+    api_key=OPENAI_API_KEY,
+    http_client=HttpxBinaryClient()
+)
 
 # Event handler for streaming assistant response
 class EventHandler(AssistantEventHandler):
