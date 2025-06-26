@@ -1,9 +1,8 @@
 from flask import Flask, request, render_template
 from dotenv import load_dotenv, find_dotenv
 from openai import OpenAI
-from openai.types.beta.threads import AssistantEventHandler  # For streaming
+from openai.types.beta import AssistantEventHandler  # FIXED
 from typing_extensions import override
-
 import os
 import pandas as pd
 import numpy as np
