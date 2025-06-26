@@ -33,17 +33,17 @@ def index():
         if prompt:
             try:
                 # Step 1: Create a thread using the modern Responses API
-                thread = client.chat.threads.create()
+                thread = client.threads.create()
 
                 # Step 2: Add user message to the thread
-                client.chat.threads.messages.create(
+                client.threads.messages.create(
                     thread_id=thread.id,
                     role="user",
                     content=prompt
                 )
 
                 # Step 3: Start the run with streaming
-                stream = client.chat.threads.runs.create(
+                stream = client.threads.runs.create(
                     thread_id=thread.id,
                     assistant_id=ASSISTANT_ID,
                     stream=True
