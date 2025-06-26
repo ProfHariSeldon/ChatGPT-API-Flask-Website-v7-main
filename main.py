@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template
-from openai.types.beta import AssistantEventHandler  # (valid in ≥1.10.0)
-from openai.http import HttpxBinaryClient  # Available in >=1.7.0
+from openai import OpenAI
+from openai.assistants import AssistantEventHandler
+from openai.http import HttpxBinaryClient
 from dotenv import load_dotenv, find_dotenv
 import os
 import pandas as pd
@@ -10,29 +11,14 @@ from typing_extensions import override
 
 # Load environment variables
 _ = load_dotenv(find_dotenv())
-
-# Environment values
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 ASSISTANT_ID = os.environ.get("ASSISTANT_ID")
 
-# Flask setup
+# Initialize Flask app and OpenAI client
 app = Flask(__name__)
+client = OpenAI(api_key=OPENAI_API_KEY, http_client=HttpxBinaryClient())
 
-# ✅ Create OpenAI client with clean HTTPX wrapper (avoids Render proxy injection)
-client = OpenAI(
-    api_key=OPENAI_API_KEY,
-    http_client=HttpxBinaryClient()
-)
-
-# Step 1: Create thread + message
-thread = client.beta.threads.create()
-client.beta.threads.messages.create(
-    thread_id=thread.id,
-    role="user",
-    content="How many circRNAs are in hsa_hg38_circRNA.bed?"
-)
-
-# Step 2: Stream run with handler
+# Event handler for streaming assistant response
 class EventHandler(AssistantEventHandler):
     @override
     def on_text_created(self, text) -> None:
@@ -55,15 +41,27 @@ class EventHandler(AssistantEventHandler):
                     if output.type == "logs":
                         print(f"\n{output.logs}", flush=True)
 
-with client.beta.threads.runs.create_and_stream(
-    thread_id=thread.id,
-    assistant_id=ASSISTANT_ID,
-    instructions="Please address the user as Jane Doe. The user has a premium account.",
-    event_handler=EventHandler(),
-) as stream:
-    stream.until_done()
+# Thread + message + stream run
+def start_assistant_thread():
+    thread = client.beta.threads.create()
+    client.beta.threads.messages.create(
+        thread_id=thread.id,
+        role="user",
+        content="How many circRNAs are in hsa_hg38_circRNA.bed?"
+    )
 
-# UI route
+    with client.beta.threads.runs.stream(
+        thread_id=thread.id,
+        assistant_id=ASSISTANT_ID,
+        instructions="Please address the user as Jane Doe. The user has a premium account.",
+        event_handler=EventHandler(),
+    ):
+        pass
+
+# Run the assistant interaction on app start
+start_assistant_thread()
+
+# UI Route
 @app.route('/', methods=['GET', 'POST'])
 def index():
     prompt = ""
@@ -134,5 +132,6 @@ def index():
 
     return render_template('index.html', prompt=prompt, response=response, graph=graph)
 
+# Start the Flask app
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
