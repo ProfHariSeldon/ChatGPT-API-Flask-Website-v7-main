@@ -9,7 +9,7 @@ https://chatgpt-api-flask-website-v7-main.onrender.com/
 
 1B. In index.html, my 22 lines of HTML code creates the Submit button
 
-2\. To dynamically generate the graphs, I queried ChatGPT and it gave me most of the python code without the import modules.  I added code to import the necessary library modules.   I consolidated the ChatGPT dynamic graphing code to fewer lines.  And I wrote HTML code for the radio buttons.  Details follow:</p>
+2. To dynamically generate the graphs, I queried ChatGPT and it gave me most of the python code without the import modules.  I added code to import the necessary library modules.   I consolidated the ChatGPT dynamic graphing code to fewer lines.  And I wrote HTML code for the radio buttons.  Details follow:</p>
 
 2A. I created ./static/chromosmoes.py to generate the graphs in 716 lines I modified from ChatGPT.  I looked up how to add radio buttons to select which graph you want to dynamically generate and implemented that.  I consolidated the ChatGPT graph generating code to be much shorter (18 lines in main.py of which graph was chosen from the radio button) and put it in main.py and no longer use ./static/chromosmoes.py 716 lines.  I copied and improved one line to return render_template('index.html', prompt=prompt, response=response, graph=graph) which is to send the variables prompt, response, and graph to index.html, to make the webpage dynamic, that I got from ChatGPT but added graph=graph.
 
