@@ -15,56 +15,6 @@ ASSISTANT_ID = os.environ.get("ASSISTANT_ID")
 # Flask app setup
 app = Flask(__name__)
 
-# Create OpenAI client
-client = OpenAI(api_key=OPENAI_API_KEY)
-
-# UI Route
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    prompt = ""
-    response = ""
-    graph = ""
-    selected_graph = ""
-
-    if request.method == 'POST':
-        prompt = request.form.get('prompt')
-        selected_graph = request.form.get('graph')
-
-        if prompt:
-            try:
-                # Step 1: Create a thread using the modern Responses API
-                thread = client.threads.create()
-
-                # Step 2: Add user message to the thread
-                client.threads.messages.create(
-                    thread_id=thread.id,
-                    role="user",
-                    content=prompt
-                )
-
-                # Step 3: Start the run with streaming
-                stream = client.threads.runs.create(
-                    thread_id=thread.id,
-                    assistant_id=ASSISTANT_ID,
-                    stream=True
-                )
-from flask import Flask, request, render_template
-from dotenv import load_dotenv, find_dotenv
-from openai import OpenAI
-import os
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import time
-
-# Load environment variables
-_ = load_dotenv(find_dotenv())
-OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
-ASSISTANT_ID = os.environ.get("ASSISTANT_ID")
-
-# Flask app setup
-app = Flask(__name__)
-
 # ✅ Create OpenAI client
 client = OpenAI(api_key=OPENAI_API_KEY)
 
@@ -98,62 +48,6 @@ def index():
                     assistant_id=ASSISTANT_ID,
                     stream=True
                 )
-
-                response = ""
-                for event in stream.iter_events():
-                    if event.data and hasattr(event.data, 'content'):
-                        for content_block in event.data.content:
-                            if hasattr(content_block, 'text') and content_from flask import Flask, request, render_template
-from dotenv import load_dotenv, find_dotenv
-from openai import OpenAI
-import os
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import time
-
-# Load environment variables
-_ = load_dotenv(find_dotenv())
-OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
-ASSISTANT_ID = os.environ.get("ASSISTANT_ID")
-
-# Flask app setup
-app = Flask(__name__)
-
-# ✅ Create OpenAI client
-client = OpenAI(api_key=OPENAI_API_KEY)
-
-# UI Route
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    prompt = ""
-    response = ""
-    graph = ""
-    selected_graph = ""
-
-    if request.method == 'POST':
-        prompt = request.form.get('prompt')
-        selected_graph = request.form.get('graph')
-
-        if prompt:
-            try:
-                # Step 1: Create a thread using the modern Responses API
-                thread = client.threads.create()
-
-                # Step 2: Add user message to the thread
-                client.threads.messages.create(
-                    thread_id=thread.id,
-                    role="user",
-                    content=prompt
-                )
-
-                # Step 3: Start the run with streaming
-                stream = client.threads.runs.stream(
-                    thread_id=thread.id,
-                    assistant_id=ASSISTANT_ID,
-                    stream=True
-                )
-
                 response = ""
                 for event in stream.iter_events():
                     if event.data and hasattr(event.data, 'content'):
