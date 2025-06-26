@@ -9,7 +9,6 @@ import matplotlib.pyplot as plt
 # Load environment variables
 _ = load_dotenv(find_dotenv())
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
-ASSISTANT_ID = os.environ.get("ASSISTANT_ID")
 
 # Flask app setup
 app = Flask(__name__)
@@ -31,13 +30,12 @@ def index():
 
         if prompt:
             try:
-                # Use the new Assistants v2 Responses API
-                result = client.responses.create(
+                # Use OpenAI chat completions API
+                completion = client.chat.completions.create(
                     model="gpt-4o",
-                    input=prompt,
-                    stream=False
+                    messages=[{"role": "user", "content": prompt}]
                 )
-                response = result.response.text
+                response = completion.choices[0].message.content
             except Exception as e:
                 response = f"An error occurred: {str(e)}"
 
