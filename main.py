@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 # Load environment variables
 _ = load_dotenv(find_dotenv())
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
+ASSISTANT_ID = os.environ.get("ASSISTANT_ID")
 
 # Flask app setup
 app = Flask(__name__)
@@ -32,7 +33,10 @@ def index():
             try:
                 with client.chat.completions.with_raw_response.create(
                     model="gpt-4-turbo",
-                    messages=[{"role": "user", "content": prompt}],
+                    messages=[
+                        {"role": "system", "content": f"You are an assistant assigned to user with premium access. Assistant ID: {ASSISTANT_ID}."},
+                        {"role": "user", "content": prompt}
+                    ],
                     stream=True
                 ) as stream:
                     response = ""
