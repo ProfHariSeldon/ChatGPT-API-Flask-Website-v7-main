@@ -14,7 +14,7 @@ ASSISTANT_ID = os.environ.get("ASSISTANT_ID")
 # Flask app setup
 app = Flask(__name__)
 
-# ✅ Create OpenAI client
+# Create OpenAI client
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 # UI Route
@@ -31,14 +31,14 @@ def index():
 
         if prompt:
             try:
-                # Use the modern Responses API directly
+                # Use the new Assistants v2 Responses API
                 result = client.responses.create(
+                    assistant_id=ASSISTANT_ID,
                     model="gpt-4o",
                     input=prompt,
-                    extra_body={"assistant_id": ASSISTANT_ID}
+                    stream=False
                 )
                 response = result.response.text
-
             except Exception as e:
                 response = f"An error occurred: {str(e)}"
 
