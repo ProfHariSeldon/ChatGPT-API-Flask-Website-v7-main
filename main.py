@@ -1,7 +1,6 @@
 from flask import Flask, request, render_template
 from dotenv import load_dotenv, find_dotenv
-from openai import OpenAI
-from openai import AssistantEventHandler
+from openai import OpenAI, AssistantEventHandler
 from typing_extensions import override
 import os
 import pandas as pd
