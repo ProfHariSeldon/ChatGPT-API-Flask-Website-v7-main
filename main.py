@@ -2,7 +2,7 @@ from flask import Flask, request, render_template
 from dotenv import load_dotenv, find_dotenv
 from openai import OpenAI
 from openai.http import HttpxBinaryClient  # Available in >=1.7.0
-from openai.types.beta.threads import AssistantEventHandler  # ✅ FIXED IMPORT
+from openai.types.beta.threads import AssistantEventHandler  # FIXED IMPORT
 from typing_extensions import override
 
 import os
