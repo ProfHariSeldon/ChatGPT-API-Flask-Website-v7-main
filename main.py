@@ -1,7 +1,6 @@
 from flask import Flask, request, render_template
 from dotenv import load_dotenv, find_dotenv
-from openai import OpenAI, AssistantEventHandler
-from typing_extensions import override
+from openai import OpenAI
 import os
 import pandas as pd
 import numpy as np
@@ -10,56 +9,12 @@ import matplotlib.pyplot as plt
 # Load environment variables
 _ = load_dotenv(find_dotenv())
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
-ASSISTANT_ID = os.environ.get("ASSISTANT_ID")
 
 # Flask app setup
 app = Flask(__name__)
 
-# ✅ Create OpenAI client (without HttpxBinaryClient)
+# ✅ Create OpenAI client
 client = OpenAI(api_key=OPENAI_API_KEY)
-
-# Event handler for streaming assistant response
-class EventHandler(AssistantEventHandler):
-    @override
-    def on_text_created(self, text) -> None:
-        print(f"\nassistant > ", end="", flush=True)
-
-    @override
-    def on_text_delta(self, delta, snapshot):
-        print(delta.value, end="", flush=True)
-
-    def on_tool_call_created(self, tool_call):
-        print(f"\nassistant > {tool_call.type}\n", flush=True)
-
-    def on_tool_call_delta(self, delta, snapshot):
-        if delta.type == 'code_interpreter':
-            if delta.code_interpreter.input:
-                print(delta.code_interpreter.input, end="", flush=True)
-            if delta.code_interpreter.outputs:
-                print(f"\n\noutput >", flush=True)
-                for output in delta.code_interpreter.outputs:
-                    if output.type == "logs":
-                        print(f"\n{output.logs}", flush=True)
-
-'''
-# Run assistant thread at startup
-def start_assistant_thread():
-    thread = client.beta.threads.create()
-    client.beta.threads.messages.create(
-        thread_id=thread.id,
-        role="user",
-        content="How many circRNAs are in hsa_hg38_circRNA.bed?"
-    )
-
-    with client.beta.threads.runs.stream(
-        thread_id=thread.id,
-        assistant_id=ASSISTANT_ID,
-        instructions="Please address the user as Jane Doe. The user has a premium account.",
-        event_handler=EventHandler(),
-    ):
-        pass
-
-start_assistant_thread() '''
 
 # UI Route
 @app.route('/', methods=['GET', 'POST'])
@@ -77,14 +32,14 @@ def index():
             try:
                 with client.chat.completions.with_raw_response.create(
                     model="gpt-4-turbo",
-                    messages=[{"role": "user", "content": "Your message here"}],
+                    messages=[{"role": "user", "content": prompt}],
                     stream=True
                 ) as stream:
+                    response = ""
                     for chunk in stream.iter_text():
-                        print(chunk, end="", flush=True)
-                # response = completion.choices[0].message.content
-            # except Exception as e:
-                # response = f"An error occurred: {str(e)}"
+                        response += chunk
+            except Exception as e:
+                response = f"An error occurred: {str(e)}"
 
         if selected_graph:
             try:
