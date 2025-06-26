@@ -5,6 +5,7 @@ import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import time
 
 # Load environment variables
 _ = load_dotenv(find_dotenv())
@@ -41,7 +42,7 @@ def index():
                     content=prompt
                 )
 
-                # Step 3: Start the run (non-streaming)
+                # Step 3: Start the run
                 run = client.beta.threads.runs.create(
                     thread_id=thread.id,
                     assistant_id=ASSISTANT_ID
@@ -49,16 +50,19 @@ def index():
 
                 # Step 4: Poll until run completes
                 while True:
-                    run = client.beta.threads.runs.retrieve(
+                    run_status = client.beta.threads.runs.retrieve(
                         thread_id=thread.id,
                         run_id=run.id
                     )
-                    if run.status in ["completed", "failed", "cancelled"]:
+                    if run_status.status in ["completed", "failed", "cancelled"]:
                         break
+                    time.sleep(1)
 
                 # Step 5: Get the messages
                 messages = client.beta.threads.messages.list(thread_id=thread.id)
-                response_chunks = [msg.content[0].text.value for msg in messages.data if msg.role == "assistant"]
+                response_chunks = [
+                    msg.content[0].text.value for msg in messages.data if msg.role == "assistant"
+                ]
                 response = "\n".join(response_chunks)
 
             except Exception as e:
