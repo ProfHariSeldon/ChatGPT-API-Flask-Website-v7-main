@@ -48,6 +48,7 @@ def index():
                     assistant_id=ASSISTANT_ID,
                     stream=True
                 )
+                
                 response = ""
                 for event in stream.iter_events():
                     if event.data and hasattr(event.data, 'content'):
